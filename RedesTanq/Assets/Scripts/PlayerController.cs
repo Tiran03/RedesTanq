@@ -9,6 +9,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 200f;
     //private Camera camera;
+    [SerializeField] private GameObject bulletPrefab; // Prefab de la bala
+    [SerializeField] private Transform firePoint; // Punto desde donde se disparará la bala
+    [SerializeField] private float fireRate = 0.5f;
+    private float nextFireTime = 0f;
 
     private void Awake()
     {
@@ -25,6 +29,15 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
+    {
+        if (pv.IsMine)
+        {
+            HandleMovement();
+            HandleShooting();
+        }
+    }
+
+    private void HandleMovement()
     {
         if (pv.IsMine)
         {
@@ -50,6 +63,20 @@ public class PlayerController : MonoBehaviour
                 transform.position += -transform.up * moveSpeed * Time.deltaTime;
             }
         }
+    }
+
+    private void HandleShooting()
+    {
+        if (Input.GetKey(KeyCode.Space) && Time.time >= nextFireTime)
+        {
+            nextFireTime = Time.time + fireRate;
+            FireBullet();
+        }
+    }
+
+    private void FireBullet()
+    {
+        GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
     }
 }
 
