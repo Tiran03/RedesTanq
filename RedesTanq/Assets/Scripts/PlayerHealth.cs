@@ -1,23 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
+using TMPro;
+using UnityEngine;
 
-public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerHealth : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private int maxHealth = 5;
+    [SerializeField] private int maxHealth = 100;
     private int currentHealth;
+
+    public TextMeshProUGUI healthText;
+    public bool isTank1; // Determina si es el tanque 1 o 2
+
+    private VictoryManager victoryManager; // Referencia al VictoryManager
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        victoryManager = FindObjectOfType<VictoryManager>(); // Encontrar el VictoryManager en la escena
+    }
+
+    private void Update()
+    {
+        UpdateHealthUI();
     }
 
     public void TakeDamage(int damage)
     {
-        if (!photonView.IsMine) return;
+        photonView.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, damage);
+    }
 
+    [PunRPC]
+    private void RPC_TakeDamage(int damage)
+    {
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
@@ -27,36 +40,53 @@ public class PlayerHealth : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Die()
     {
-        // Desactivar el tanque localmente
         gameObject.SetActive(false);
-
-        // Lógica para cuando un jugador muere, como respawnear o finalizar la partida
         Debug.Log("Player died!");
-
-        // Aquí puedes implementar la lógica para respawn o finalizar la partida
-        // PhotonNetwork.Destroy(gameObject);
+        CheckVictory();
     }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    private void UpdateHealthUI()
     {
-        if (stream.IsWriting)
+        if (healthText != null)
         {
-            // Envía la vida actual a otros jugadores
-            stream.SendNext(currentHealth);
+            healthText.text = $"Health: {currentHealth}";
         }
         else
         {
-            // Recibe la vida actual de otros jugadores
-            currentHealth = (int)stream.ReceiveNext();
+            Debug.LogWarning("TextMeshProUGUI reference is missing!");
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void CheckVictory()
     {
-        if (collision.CompareTag("Bullet"))
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            // Aplicar daño si es golpeado por una bala
-            TakeDamage(1); // Ajusta la cantidad de daño según sea necesario
+            if (isTank1)
+            {
+                photonView.RPC("RPC_Player2Wins", RpcTarget.AllBuffered);
+            }
+            else
+            {
+                photonView.RPC("RPC_Player1Wins", RpcTarget.AllBuffered);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void RPC_Player1Wins()
+    {
+        if (victoryManager != null)
+        {
+            victoryManager.photonView.RPC("ShowPlayer1Wins", RpcTarget.AllBuffered);
+        }
+    }
+
+    [PunRPC]
+    private void RPC_Player2Wins()
+    {
+        if (victoryManager != null)
+        {
+            victoryManager.photonView.RPC("ShowPlayer2Wins", RpcTarget.AllBuffered);
         }
     }
 }

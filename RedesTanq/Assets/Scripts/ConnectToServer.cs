@@ -10,6 +10,6 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        SceneManager.LoadScene("Red");
+        SceneManager.LoadScene("MenuScene");
     }
 }

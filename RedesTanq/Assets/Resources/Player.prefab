@@ -107,11 +107,12 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5485743271514616403}
+  - {fileID: 998852399509055582}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -250,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 5
+  healthText: {fileID: 0}
+  isTank1: 0
 --- !u!1 &5694410903777391132
 GameObject:
   m_ObjectHideFlags: 0

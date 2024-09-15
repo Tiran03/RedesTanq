@@ -14,10 +14,6 @@ public class LoadingManager : MonoBehaviour
 
     public List<AsyncOperation> sceneLoading = new List<AsyncOperation>();
 
-    //public void Awaque()
-    //{
-
-    //}
     public void Awake()
     {
         if (Instance == null)
@@ -47,14 +43,6 @@ public class LoadingManager : MonoBehaviour
             }
 
         }
-
-        //yield return new WaitForSeconds(3);
-
-        // pressAnyKey.gameObject.SetActive(true);
-
-        // yield return new WaitUntil(() => Input.anyKey);
-
-        // pressAnyKey.gameObject.SetActive(false);
 
         screen.SetActive(false);
     }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5971187722868413485}
   - component: {fileID: 3142748614864204498}
   - component: {fileID: 4791753484177146284}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Triangle
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   lifeTime: 5
+  damage: 1
 --- !u!60 &-7377207860386526756
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &3142748614864204498
 MonoBehaviour:
@@ -193,7 +194,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 1
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:

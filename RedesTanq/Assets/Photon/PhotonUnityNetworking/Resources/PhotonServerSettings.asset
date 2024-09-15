@@ -40,6 +40,17 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - ChangeColor
+  - RPC_TakeDamage
+  - RPC_UpdateHealthUI
+  - RPC_EndGame
+  - RPC_UpdateTimer
+  - RPC_RequestTimeSync
+  - AssignHealthText
+  - RPC_HandleWinCondition
+  - RPC_Player1Wins
+  - RPC_Player2Wins
+  - ShowPlayer1Wins
+  - ShowPlayer2Wins
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -16,8 +16,8 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         elBoton.interactable = true;
-        Option.interactable = true;
-        back.interactable = true;
+        //Option.interactable = true;
+        //back.interactable = true;
 
     }
     //public void OnPanelChange(GameObject panelToGo)
@@ -29,7 +29,7 @@ public class Menu : MonoBehaviour
 
     public void OnPlay()
     {
-        LoadingManager.Instance.LoadScene(1, 2);
+        SceneManager.LoadScene("Red");
     }
 
     public void Options()
