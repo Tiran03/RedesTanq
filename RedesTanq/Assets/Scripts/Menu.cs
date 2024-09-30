@@ -63,5 +63,8 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-
+    public void GoBack()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
 }

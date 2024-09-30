@@ -18,7 +18,7 @@ public class PlayerSpawn : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
 
-        // Verificar que los TextMeshProUGUI estén correctamente asignados en el Inspector
+        
         if (tank1HealthText == null || tank2HealthText == null)
         {
             //Debug.LogError("Health Text references are missing! Please assign them in the Inspector.");
@@ -28,8 +28,26 @@ public class PlayerSpawn : MonoBehaviour
 
     void Start()
     {
-        player = PhotonNetwork.Instantiate(playerPrefab.name, new Vector2(Random.Range(-4, 4), Random.Range(-4, 4)), Quaternion.identity);
+        Vector2 spawnPosition;
+
         int playerIndex = PhotonNetwork.PlayerList.Length;
+
+        
+        if (playerIndex == 1)
+        {
+            spawnPosition = new Vector2(-6.322893f, 1.466833f); // Coordenadas de Player 1
+        }
+        else if (playerIndex == 2)
+        {
+            spawnPosition = new Vector2(8f, 1.396584f); // Coordenadas de Player 2
+        }
+        else
+        {
+            spawnPosition = new Vector2(Random.Range(-4, 4), Random.Range(-4, 4)); // Posición aleatoria en caso de error
+        }
+
+      
+        player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPosition, Quaternion.identity);
 
         pv.RPC("AssignHealthText", RpcTarget.AllBuffered, player.GetComponent<PhotonView>().ViewID, playerIndex);
 
@@ -59,13 +77,13 @@ public class PlayerSpawn : MonoBehaviour
             // Asignar el TextMeshProUGUI basado en el índice del jugador
             if (playerIndex == 1)
             {
-                playerHealth.healthText = tank1HealthText; // Asigna el texto para Tank1
+                playerHealth.healthText = tank1HealthText;
                 playerHealth.isTank1 = true;
                 //Debug.Log("Assigned Tank1 healthText via RPC.");
             }
             else if (playerIndex == 2)
             {
-                playerHealth.healthText = tank2HealthText; // Asigna el texto para Tank2
+                playerHealth.healthText = tank2HealthText;
                 playerHealth.isTank1 = false;
                 //Debug.Log("Assigned Tank2 healthText via RPC.");
             }

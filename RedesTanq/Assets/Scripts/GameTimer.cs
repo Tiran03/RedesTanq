@@ -25,7 +25,7 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
 
             if (timerText == null)
             {
-                Debug.LogError("TextMeshProUGUI reference is missing on GameTimer!");
+                //Debug.LogError("TextMeshProUGUI reference is missing on GameTimer!");
                 return;
             }
         }

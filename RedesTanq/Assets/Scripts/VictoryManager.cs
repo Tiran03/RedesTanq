@@ -14,29 +14,41 @@ public class VictoryManager : MonoBehaviourPunCallbacks
             player1WinsImage.SetActive(false);
             player2WinsImage.SetActive(false);
         }
-        else
-        {
-            Debug.Log("Victory images are not assigned.");
-        }
     }
 
     [PunRPC]
     public void ShowPlayer1Wins()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
-        {
-            player1WinsImage.SetActive(true);
-            player2WinsImage.SetActive(false);
-        }
+        player1WinsImage.SetActive(true);
+        player2WinsImage.SetActive(false);
     }
 
     [PunRPC]
     public void ShowPlayer2Wins()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        player1WinsImage.SetActive(false);
+        player2WinsImage.SetActive(true);
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        Debug.Log("Jugador Abandono");
+
+        // Verificar el PhotonView ID del jugador que queda
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
         {
-            player1WinsImage.SetActive(false);
-            player2WinsImage.SetActive(true);
+            int remainingPlayerID = PhotonNetwork.LocalPlayer.ActorNumber;
+
+            if (remainingPlayerID == 1)
+            {
+                Debug.Log("Gana jugador 1");
+                photonView.RPC("ShowPlayer1Wins", RpcTarget.All);
+            }
+            else if (remainingPlayerID == 2)
+            {
+                Debug.Log("Gana jugador 2");
+                photonView.RPC("ShowPlayer2Wins", RpcTarget.All);
+            }
         }
     }
 }

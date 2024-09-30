@@ -51,6 +51,8 @@ MonoBehaviour:
   - RPC_Player2Wins
   - ShowPlayer1Wins
   - ShowPlayer2Wins
+  - RPC_ReturnToMenu
+  - RPC_DisablePowerUp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

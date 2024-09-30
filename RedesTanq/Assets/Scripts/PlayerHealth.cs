@@ -1,16 +1,19 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
+    private bool isInvulnerable = false; 
+    [SerializeField] private float invulnerabilityDuration = 1f; 
 
     public TextMeshProUGUI healthText;
-    public bool isTank1; // Determina si es el tanque 1 o 2
+    public bool isTank1;
 
-    private VictoryManager victoryManager; // Referencia al VictoryManager
+    private VictoryManager victoryManager; 
 
     private void Awake()
     {
@@ -31,11 +34,26 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        if (!isInvulnerable) 
         {
-            Die();
+            currentHealth -= damage;
+            StartCoroutine(InvulnerabilityCoroutine()); // Iniciar invulnerabilidad
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
         }
+        else
+        {
+            Debug.Log("Player is invulnerable and cannot take damage.");
+        }
+    }
+
+    private IEnumerator InvulnerabilityCoroutine()
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerabilityDuration); 
+        isInvulnerable = false; 
     }
 
     private void Die()

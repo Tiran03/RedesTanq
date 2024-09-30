@@ -1,9 +1,10 @@
 using Photon.Pun;
 using UnityEngine;
+using System.Collections.Generic;
 
-public class EnemySpawner : MonoBehaviour
+public class PowerSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private List<GameObject> powerPrefabs; // Lista de poderes
     [SerializeField] private float timeToStartSpawning;
     [SerializeField] private float timeBetweenSpawn;
 
@@ -18,12 +19,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if (PhotonNetwork.CurrentRoom.PlayerCount >= 1)
         {
-            matchStarted = true;
             if (PhotonNetwork.IsMasterClient)
             {
                 timer += Time.deltaTime;
+                matchStarted = true;
+
                 if (!readyToSpawn && timeToStartSpawning < timer)
                 {
                     readyToSpawn = true;
@@ -33,15 +35,16 @@ public class EnemySpawner : MonoBehaviour
                 if (readyToSpawn && timer > timeBetweenSpawn)
                 {
                     timer = 0;
-                    PhotonNetwork.Instantiate(enemyPrefab.name,
-                                    new Vector2(Random.Range(-4, 4), Random.Range(-4, 4)),
-                                    Quaternion.identity);
+
+                    // Elegir un poder al azar de la lista
+                    int randomIndex = Random.Range(0, powerPrefabs.Count);
+                    GameObject randomPower = powerPrefabs[randomIndex];
+
+                    // Instanciar el poder elegido
+                    PhotonNetwork.Instantiate(randomPower.name, new Vector2(Random.Range(-4, 4), Random.Range(-4, 4)), Quaternion.identity);
                 }
             }
         }
-        else if (PhotonNetwork.CurrentRoom.PlayerCount < 2 && matchStarted)
-        {
-            //Borrar la lista de enemigos
-        }
     }
 }
+
