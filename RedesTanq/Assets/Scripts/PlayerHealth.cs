@@ -7,13 +7,13 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int maxHealth = 100;
     private int currentHealth;
-    private bool isInvulnerable = false; 
-    [SerializeField] private float invulnerabilityDuration = 1f; 
+    private bool isInvulnerable = false;
+    [SerializeField] private float invulnerabilityDuration = 1f;
 
     public TextMeshProUGUI healthText;
     public bool isTank1;
 
-    private VictoryManager victoryManager; 
+    private VictoryManager victoryManager;
 
     private void Awake()
     {
@@ -26,6 +26,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         UpdateHealthUI();
     }
 
+    // Función que sincroniza el daño para todos los jugadores
     public void TakeDamage(int damage)
     {
         photonView.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, damage);
@@ -34,7 +35,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_TakeDamage(int damage)
     {
-        if (!isInvulnerable) 
+        if (!isInvulnerable)
         {
             currentHealth -= damage;
             StartCoroutine(InvulnerabilityCoroutine()); // Iniciar invulnerabilidad
@@ -49,13 +50,15 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
     }
 
+    // Invulnerabilidad tras recibir daño
     private IEnumerator InvulnerabilityCoroutine()
     {
         isInvulnerable = true;
-        yield return new WaitForSeconds(invulnerabilityDuration); 
-        isInvulnerable = false; 
+        yield return new WaitForSeconds(invulnerabilityDuration);
+        isInvulnerable = false;
     }
 
+    // Función que sincroniza la muerte
     private void Die()
     {
         gameObject.SetActive(false);
@@ -63,6 +66,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         CheckVictory();
     }
 
+    // Actualización de la UI de la salud
     private void UpdateHealthUI()
     {
         if (healthText != null)
@@ -75,6 +79,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
     }
 
+    // Verificación de la victoria
     private void CheckVictory()
     {
         if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
@@ -106,5 +111,39 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         {
             victoryManager.photonView.RPC("ShowPlayer2Wins", RpcTarget.AllBuffered);
         }
+    }
+
+    // Función para aplicar el escudo temporal (invulnerabilidad)
+    public void ApplyShield(float shieldDuration)
+    {
+        photonView.RPC("RPC_ApplyShield", RpcTarget.AllBuffered, shieldDuration);
+    }
+
+    [PunRPC]
+    private void RPC_ApplyShield(float shieldDuration)
+    {
+        Debug.Log("Escudo Activo");
+        StartCoroutine(ShieldCoroutine(shieldDuration));
+    }
+
+    private IEnumerator ShieldCoroutine(float shieldDuration)
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(shieldDuration);
+        isInvulnerable = false;
+    }
+
+    // Función para restaurar la salud
+    public void RestoreHealth(int healthAmount)
+    {
+        photonView.RPC("RPC_RestoreHealth", RpcTarget.AllBuffered, healthAmount);
+    }
+
+    [PunRPC]
+    private void RPC_RestoreHealth(int healthAmount)
+    {
+        Debug.Log("Vida restaurada");
+        currentHealth = Mathf.Min(currentHealth + healthAmount, maxHealth);
+        UpdateHealthUI();
     }
 }

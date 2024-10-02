@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 6937271836710782944}
   - component: {fileID: 3274136481125342663}
   - component: {fileID: -1529217117230621737}
-  - component: {fileID: -6020376842052790356}
+  - component: {fileID: 781124246518234574}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.87169886, a: 1}
+  m_Color: {r: 0.3679244, g: 0.9848625, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -179,7 +179,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-6020376842052790356
+--- !u!114 &781124246518234574
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,9 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6859685007415265300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1e77bc77ee196409aed7ab0696ebbd, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a6b75312540770489e7a89ca8c59db1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostDuration: 10
-  speedMultiplier: 2
-  rotationMultiplier: 2
+  shieldDuration: 5

@@ -7,28 +7,28 @@ public class PlayerController : MonoBehaviour
     private PhotonView pv;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 200f;
-    [SerializeField] private GameObject bulletPrefab; 
-    [SerializeField] private Transform firePoint; 
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform firePoint;
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
 
     private float originalMoveSpeed;
     private float originalRotationSpeed;
+    private float originalFireRate;
+
+
+    // Variables para el poder de bala perforante
+    private bool isPiercingBulletActive = false;
+    private float bulletSpeedMultiplier;
+    private float piercingBulletDuration;
 
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         originalMoveSpeed = moveSpeed;
         originalRotationSpeed = rotationSpeed;
+        originalFireRate = fireRate;
     }
-
-    //private void Start()
-    //{
-    //    if (pv.IsMine)
-    //    {
-    //        
-    //    }
-    //}
 
     private void Update()
     {
@@ -76,6 +76,16 @@ public class PlayerController : MonoBehaviour
     private void FireBullet()
     {
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
+
+        // Si el poder de bala perforante está activo, aplicarlo a la bala
+        if (isPiercingBulletActive)
+        {
+            Bullet bulletScript = bullet.GetComponent<Bullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.ApplyPiercingEffect(bulletSpeedMultiplier, piercingBulletDuration);
+            }
+        }
     }
 
     // Función para aplicar el poder de velocidad
@@ -100,5 +110,43 @@ public class PlayerController : MonoBehaviour
         moveSpeed = originalMoveSpeed;
         rotationSpeed = originalRotationSpeed;
     }
-}
 
+    // Función para activar la bala perforante
+    public void ApplyPiercingBullet(float speedMultiplier, float duration)
+    {
+        if (pv.IsMine)
+        {
+            isPiercingBulletActive = true;
+            bulletSpeedMultiplier = speedMultiplier;
+            piercingBulletDuration = duration;
+            StartCoroutine(DeactivatePiercingBulletAfterDuration());
+        }
+    }
+
+    private IEnumerator DeactivatePiercingBulletAfterDuration()
+    {
+        yield return new WaitForSeconds(piercingBulletDuration);
+        isPiercingBulletActive = false;
+    }
+
+    // Función para aplicar el poder de disparo rápido (rapid fire)
+    public void ApplyRapidFire(float fireRateMultiplier, float boostDuration)
+    {
+        if (pv.IsMine)
+        {
+            StartCoroutine(RapidFireCoroutine(fireRateMultiplier, boostDuration));
+        }
+    }
+
+    private IEnumerator RapidFireCoroutine(float fireRateMultiplier, float boostDuration)
+    {
+        // Aumentar la tasa de disparo (disminuye el tiempo entre disparos)
+        fireRate /= fireRateMultiplier;
+
+        // Esperar la duración del boost
+        yield return new WaitForSeconds(boostDuration);
+
+        // Restaurar la tasa de disparo original
+        fireRate = originalFireRate;
+    }
+}

@@ -3,42 +3,68 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Bullet : MonoBehaviourPunCallbacks
+public class Bullet : MonoBehaviourPun
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float lifeTime = 5f;
-    [SerializeField] private int damage = 20; // Cantidad de daño que inflige la bala
-
-    private void Start()
-    {
-        Destroy(gameObject, lifeTime);
-    }
+    public float speed = 10f;
+    public int damage = 10;
+    private bool isPiercing = false;
+    private float piercingBulletDuration;
+    private float bulletSpeedMultiplier = 1f;
 
     private void Update()
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector3.up * speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (!photonView.IsMine) return;
 
-        if (collision.CompareTag("Player"))
+        // Si la bala es perforante, atraviesa al objeto sin destruirse
+        if (isPiercing)
         {
-            PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            // Lógica para la bala perforante (puedes añadir más comportamiento aquí si es necesario)
+            if (other.CompareTag("Player"))
             {
-                playerHealth.TakeDamage(damage);
+                PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(damage);
+                }
+            }
+        }
+        else
+        {
+            // Lógica normal para las balas
+            if (other.CompareTag("Player"))
+            {
+                PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(damage);
+                }
             }
 
-            PhotonNetwork.Destroy(gameObject);
-        }
-        else if (collision.CompareTag("Wall"))
-        {
-            PhotonNetwork.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject); // Destruye la bala si no es perforante
         }
     }
 
+    // Método que se llama cuando el poder de bala perforante está activo
+    public void ApplyPiercingEffect(float speedMultiplier, float duration)
+    {
+        isPiercing = true;
+        bulletSpeedMultiplier = speedMultiplier;
+        piercingBulletDuration = duration;
+        speed *= bulletSpeedMultiplier; // Aumenta la velocidad de la bala
 
+        // Desactiva el efecto después de que termine la duración
+        StartCoroutine(DisablePiercingEffectAfterDuration());
+    }
 
+    private IEnumerator DisablePiercingEffectAfterDuration()
+    {
+        yield return new WaitForSeconds(piercingBulletDuration);
+        isPiercing = false;
+        speed /= bulletSpeedMultiplier; // Restaura la velocidad original
+    }
 }
