@@ -1,33 +1,52 @@
-using Photon.Pun;
+using System.Collections;
 using UnityEngine;
+using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class VictoryManager : MonoBehaviourPunCallbacks
 {
-    public GameObject player1WinsImage; // Imagen de victoria del Player 1
-    public GameObject player2WinsImage; // Imagen de victoria del Player 2
+    [SerializeField] private GameObject player1WinsScreen;
+    [SerializeField] private GameObject player2WinsScreen;
+    [SerializeField] private float victoryScreenDuration = 40f; // Duración antes de volver al menú principal
 
     private void Awake()
     {
-        // Asegúrate de que ambas imágenes estén desactivadas al inicio
-        if (player1WinsImage != null && player2WinsImage != null)
-        {
-            player1WinsImage.SetActive(false);
-            player2WinsImage.SetActive(false);
-        }
+        player1WinsScreen.SetActive(false);
+        player2WinsScreen.SetActive(false);
     }
 
     [PunRPC]
     public void ShowPlayer1Wins()
     {
-        player1WinsImage.SetActive(true);
-        player2WinsImage.SetActive(false);
+        player1WinsScreen.SetActive(true);
+        StartCoroutine(VictoryScreenTimer());
     }
 
     [PunRPC]
     public void ShowPlayer2Wins()
     {
-        player1WinsImage.SetActive(false);
-        player2WinsImage.SetActive(true);
+        player2WinsScreen.SetActive(true);
+        StartCoroutine(VictoryScreenTimer());
+    }
+
+    private IEnumerator VictoryScreenTimer()
+    {
+        float timer = victoryScreenDuration;
+
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        // Cuando el tiempo llega a 0, se vuelve al menú principal
+        //ReturnToMainMenu();
+    }
+
+    private void ReturnToMainMenu()
+    {
+        PhotonNetwork.LeaveRoom(); // Salir de la sala antes de cargar el menú principal
+        SceneManager.LoadScene("MenuScene");
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)

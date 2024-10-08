@@ -55,6 +55,14 @@ MonoBehaviour:
   - RPC_DisablePowerUp
   - RPC_ApplyShield
   - RPC_RestoreHealth
+  - RPC_PlayerWantsRematch
+  - RPC_Player1WantsRematch
+  - RPC_Player2WantsRematch
+  - RPC_SetRematch
+  - RPC_SetPlayer1Ready
+  - RPC_SetPlayer2Ready
+  - RPC_StartRematch
+  - RPC_RestoreHealth2
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

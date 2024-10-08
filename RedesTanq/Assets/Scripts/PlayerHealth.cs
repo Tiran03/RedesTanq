@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     private int currentHealth;
     private bool isInvulnerable = false;
     [SerializeField] private float invulnerabilityDuration = 1f;
+    public bool IsDeath = false;
 
     public TextMeshProUGUI healthText;
     public bool isTank1;
@@ -41,7 +42,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             StartCoroutine(InvulnerabilityCoroutine()); // Iniciar invulnerabilidad
             if (currentHealth <= 0)
             {
-                Die();
+                IsDeath = true;
+                if (IsDeath)
+                {
+                    Die();
+                }
+                
             }
         }
         else
@@ -61,9 +67,18 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     // Función que sincroniza la muerte
     private void Die()
     {
-        gameObject.SetActive(false);
-        Debug.Log("Player died!");
-        CheckVictory();
+        if (IsDeath)
+        {
+            //gameObject.SetActive(false);
+            Debug.Log("Player died!");
+            CheckVictory();
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            currentHealth = 5;
+        }
+        
     }
 
     // Actualización de la UI de la salud
@@ -139,6 +154,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         photonView.RPC("RPC_RestoreHealth", RpcTarget.AllBuffered, healthAmount);
     }
 
+    
+    //public void RestoreHealth2(int healthToRestore)
+    //{
+    //    photonView.RPC("RPC_RestoreHealth2", RpcTarget.AllBuffered, healthToRestore);
+    //}
+
     [PunRPC]
     private void RPC_RestoreHealth(int healthAmount)
     {
@@ -146,4 +167,12 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         currentHealth = Mathf.Min(currentHealth + healthAmount, maxHealth);
         UpdateHealthUI();
     }
+    
+    //[PunRPC]
+    //private void RPC_RestoreHealth2(int healthAmount)
+    //{
+    //    Debug.Log("Vida restaurada2");
+    //    currentHealth = maxHealth;
+    //    UpdateHealthUI();
+    //}
 }

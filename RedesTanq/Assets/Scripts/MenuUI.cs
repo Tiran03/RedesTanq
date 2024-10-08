@@ -10,15 +10,15 @@ public class MenuUI : MonoBehaviourPunCallbacks
     [SerializeField] private Button joinButton;
     [SerializeField] private TMPro.TMP_InputField createInput;
     [SerializeField] private TMPro.TMP_InputField joinInput;
-    [SerializeField] private GameObject roomFullMessage; // Referencia al mensaje de "Sala Llena"
+    [SerializeField] private GameObject errorMessage; // Referencia al mensaje de "Error"
 
     private void Awake()
     {
         createButton.onClick.AddListener(CreateRoom);
         joinButton.onClick.AddListener(JoinRoom);
 
-        // Asegúrate de que el mensaje esté desactivado al inicio
-        roomFullMessage.SetActive(false);
+        // Asegúrate de que el mensaje de error esté desactivado al inicio
+        errorMessage.SetActive(false);
     }
 
     private void OnDestroy()
@@ -29,6 +29,13 @@ public class MenuUI : MonoBehaviourPunCallbacks
 
     private void CreateRoom()
     {
+        // Verificar si el campo de input está vacío
+        if (string.IsNullOrEmpty(createInput.text))
+        {
+            ShowErrorMessage("Debe proporcionar un nombre para crear la sala");
+            return; // No continuar si no hay nombre
+        }
+
         RoomOptions roomConfiguration = new RoomOptions();
         roomConfiguration.MaxPlayers = 2;
         PhotonNetwork.CreateRoom(createInput.text, roomConfiguration);
@@ -36,6 +43,13 @@ public class MenuUI : MonoBehaviourPunCallbacks
 
     private void JoinRoom()
     {
+        // Verificar si el campo de input está vacío
+        if (string.IsNullOrEmpty(joinInput.text))
+        {
+            ShowErrorMessage("Debe proporcionar un nombre para unirse a la sala");
+            return; // No continuar si no hay nombre
+        }
+
         PhotonNetwork.JoinRoom(joinInput.text);
     }
 
@@ -49,17 +63,32 @@ public class MenuUI : MonoBehaviourPunCallbacks
     {
         if (message.Contains("full"))
         {
-            // Activar el mensaje de "Sala Llena"
-            roomFullMessage.SetActive(true);
+            ShowErrorMessage("La sala está llena. Intente unirse a otra sala.");
+        }
+        else
+        {
+            ShowErrorMessage("No se pudo unir a la sala. Verifique el nombre.");
+        }
+    }
+
+    // Método para mostrar un mensaje de error
+    private void ShowErrorMessage(string errorText)
+    {
+        if (errorMessage != null)
+        {
+            // Mostrar el mensaje de error
+            errorMessage.SetActive(true);
+            // Cambiar el texto del mensaje de error
+            errorMessage.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = errorText;
             // Iniciar corrutina para ocultar el mensaje después de 4 segundos
-            StartCoroutine(HideRoomFullMessageAfterDelay(4f));
+            StartCoroutine(HideErrorMessageAfterDelay(4f));
         }
     }
 
     // Corrutina para ocultar el mensaje después de un retraso
-    private IEnumerator HideRoomFullMessageAfterDelay(float delay)
+    private IEnumerator HideErrorMessageAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        roomFullMessage.SetActive(false);
+        errorMessage.SetActive(false); // Ocultar el mensaje
     }
 }

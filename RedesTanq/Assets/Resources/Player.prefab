@@ -251,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   invulnerabilityDuration: 1.5
+  IsDeath: 0
   healthText: {fileID: 0}
   isTank1: 0
 --- !u!1 &5694410903777391132

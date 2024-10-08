@@ -22,12 +22,19 @@ public class PlayerController : MonoBehaviour
     private float bulletSpeedMultiplier;
     private float piercingBulletDuration;
 
+    // Define un tipo de tanque
+    public enum TankType { Tank1, Tank2 }
+    private TankType currentTankType;
+
+
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         originalMoveSpeed = moveSpeed;
         originalRotationSpeed = rotationSpeed;
         originalFireRate = fireRate;
+
+
     }
 
     private void Update()
@@ -148,5 +155,13 @@ public class PlayerController : MonoBehaviour
 
         // Restaurar la tasa de disparo original
         fireRate = originalFireRate;
+    }
+
+    // Método para establecer el tipo de tanque
+    public void SetTankType(TankType tankType)
+    {
+        currentTankType = tankType;
+        // Aquí puedes agregar la lógica para actualizar el modelo del tanque, si es necesario
+        Debug.Log($"Tank type set to: {currentTankType}");
     }
 }
