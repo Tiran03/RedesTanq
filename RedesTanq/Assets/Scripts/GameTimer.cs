@@ -6,7 +6,6 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private float maxTime = 120f; // Tiempo máximo en segundos
     private float currentTime;
-
     private bool isTimerStarted = false;
 
     public TextMeshProUGUI timerText; // Referencia al TextMeshPro para mostrar el temporizador
@@ -14,19 +13,17 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Start()
     {
-        
+        SetupTimer();
+    }
+
+    private void SetupTimer()
+    {
         if (timerText == null)
         {
             GameObject timerTextObject = GameObject.Find("Timer Text");
             if (timerTextObject != null)
             {
                 timerText = timerTextObject.GetComponent<TextMeshProUGUI>();
-            }
-
-            if (timerText == null)
-            {
-                //Debug.LogError("TextMeshProUGUI reference is missing on GameTimer!");
-                return;
             }
         }
 
@@ -37,44 +34,51 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            
             photonView.RPC("RPC_RequestTimeSync", RpcTarget.MasterClient);
         }
     }
 
     private void Update()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        if (!isGameOver && isTimerStarted && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
-            if (!isGameOver && isTimerStarted)
+            if (PhotonNetwork.IsMasterClient)
             {
-                if (PhotonNetwork.IsMasterClient)
+                currentTime -= Time.deltaTime;
+                if (currentTime <= 0)
                 {
-                    currentTime -= Time.deltaTime;
-
-                    if (currentTime <= 0)
-                    {
-                        currentTime = 0;
-                        photonView.RPC("RPC_EndGame", RpcTarget.AllBuffered);
-                    }
-
-
-                    photonView.RPC("RPC_UpdateTimer", RpcTarget.AllBuffered, currentTime);
+                    currentTime = 0;
+                    photonView.RPC("RPC_EndGame", RpcTarget.AllBuffered);
                 }
-
-                UpdateTimerUI();
+                photonView.RPC("RPC_UpdateTimer", RpcTarget.AllBuffered, currentTime);
             }
+            UpdateTimerUI();
         }
-
-            
     }
 
+    public void StopTimer()
+    {
+        isTimerStarted = false;
+    }
+
+    public void StartTimer()
+    {
+        isTimerStarted = true;
+    }
+
+    public void ResetTimer()
+    {
+        currentTime = maxTime;
+        isGameOver = false;
+        isTimerStarted = true;
+        UpdateTimerUI();
+    }
 
     [PunRPC]
     private void RPC_UpdateTimer(float time)
     {
-        currentTime = time; 
-        UpdateTimerUI();    
+        currentTime = time;
+        UpdateTimerUI();
     }
 
     [PunRPC]
@@ -91,7 +95,6 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     private void RPC_RequestTimeSync()
     {
-        
         photonView.RPC("RPC_UpdateTimer", RpcTarget.All, currentTime);
     }
 
@@ -99,9 +102,9 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (timerText != null)
         {
-            int minutes = Mathf.FloorToInt(currentTime / 60); // Convertir a minutos
-            int seconds = Mathf.FloorToInt(currentTime % 60); // Obtener los segundos restantes
-            timerText.text = $"{minutes:00}:{seconds:00}"; 
+            int minutes = Mathf.FloorToInt(currentTime / 60);
+            int seconds = Mathf.FloorToInt(currentTime % 60);
+            timerText.text = $"{minutes:00}:{seconds:00}";
         }
     }
 
@@ -109,12 +112,10 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // Enviar el tiempo restante a otros jugadores
             stream.SendNext(currentTime);
         }
         else
         {
-            // Recibir el tiempo restante de otros jugadores
             currentTime = (float)stream.ReceiveNext();
         }
     }

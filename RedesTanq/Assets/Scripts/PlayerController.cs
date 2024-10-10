@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     private float originalRotationSpeed;
     private float originalFireRate;
 
-
     // Variables para el poder de bala perforante
     private bool isPiercingBulletActive = false;
     private float bulletSpeedMultiplier;
@@ -26,15 +25,12 @@ public class PlayerController : MonoBehaviour
     public enum TankType { Tank1, Tank2 }
     private TankType currentTankType;
 
-
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         originalMoveSpeed = moveSpeed;
         originalRotationSpeed = rotationSpeed;
         originalFireRate = fireRate;
-
-
     }
 
     private void Update()
@@ -155,6 +151,20 @@ public class PlayerController : MonoBehaviour
 
         // Restaurar la tasa de disparo original
         fireRate = originalFireRate;
+    }
+
+    // Método para ralentizar la velocidad cuando el tanque entra en una zona de ralentización
+    public void AdjustSpeed(float slowDownFactor)
+    {
+        moveSpeed *= slowDownFactor;
+        rotationSpeed *= slowDownFactor;
+    }
+
+    // Método para restaurar la velocidad original cuando el tanque sale de la zona de ralentización
+    public void ResetSpeed()
+    {
+        moveSpeed = originalMoveSpeed;
+        rotationSpeed = originalRotationSpeed;
     }
 
     // Método para establecer el tipo de tanque

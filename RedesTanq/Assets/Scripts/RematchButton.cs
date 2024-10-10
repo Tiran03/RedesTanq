@@ -6,17 +6,20 @@ public class RematchButton : MonoBehaviourPunCallbacks
 {
     [SerializeField] private Button rematchButton; // Botón de revancha único para ambos jugadores
     [SerializeField] private GameObject waitingForOpponentText; // Texto para "esperando al oponente"
+    [SerializeField] private GameObject player1VictoryScreen; // Referencia a la pantalla de victoria del jugador 1
+    [SerializeField] private GameObject player2VictoryScreen; // Referencia a la pantalla de victoria del jugador 2
 
     private bool playerWantsRematch = false; // Indica si este jugador ha presionado el botón de revancha
     private int playersReadyForRematch = 0; // Cuenta cuántos jugadores han aceptado la revancha
-    // Referencias a las pantallas de victoria
-    [SerializeField] private GameObject player1VictoryScreen;
-    [SerializeField] private GameObject player2VictoryScreen;
+    private VictoryManager victoryManager; // Referencia al VictoryManager para reiniciar la lógica
 
     private void Start()
     {
         rematchButton.onClick.AddListener(OnRematchButtonClicked);
         waitingForOpponentText.SetActive(false); // Oculta el texto al inicio
+
+        // Obtener la referencia al VictoryManager
+        victoryManager = FindObjectOfType<VictoryManager>();
     }
 
     private void OnRematchButtonClicked()
@@ -35,7 +38,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
         // Si ambos jugadores han presionado el botón de revancha, inicia la nueva partida
         if (playersReadyForRematch >= 2)
         {
-            RPC_StartRematch();
+            photonView.RPC("RPC_StartRematch", RpcTarget.All);
         }
     }
 
@@ -64,34 +67,37 @@ public class RematchButton : MonoBehaviourPunCallbacks
         {
             if (playerHealth != null)
             {
-                Debug.Log("Reinicio");
-                playerHealth.IsDeath = false;
                 playerHealth.RestoreHealth(5);
-                playerHealth.gameObject.SetActive(true); // Asegurarse de que ambos jugadores estén activos
-
+                playerHealth.gameObject.SetActive(true);
+                playerHealth.IsDeath = false;
             }
-            
 
-            // Restablecer posición (ajusta las posiciones según tu lógica)
-            if (playerHealth.isTank1) // Si es el Player 1
+            // Restablecer posición inicial
+            if (playerHealth.isTank1)
             {
-                playerHealth.transform.position = new Vector2(-6.322893f, 1.466833f); // Reemplaza con la posición inicial del Player 1
+                playerHealth.transform.position = new Vector2(-6.322893f, 1.466833f);
             }
-            else // Si es el Player 2
+            else
             {
-                playerHealth.transform.position = new Vector2(8f, 1.396584f); // Reemplaza con la posición inicial del Player 2
+                playerHealth.transform.position = new Vector2(8f, 1.396584f);
             }
         }
 
-       
-    }
+        // Reactivar el temporizador del juego
+        GameTimer gameTimer = FindObjectOfType<GameTimer>();
+        if (gameTimer != null)
+        {
+            gameTimer.ResetTimer(); // Reinicia y comienza el temporizador
+        }
 
-    //public override void OnLeftRoom()
-    //{
-    //    // Si un jugador se va de la sala, restablece la lógica de revancha
-    //    playerWantsRematch = false;
-    //    playersReadyForRematch = 0;
-    //    rematchButton.interactable = true;
-    //    waitingForOpponentText.SetActive(false);
-    //}
+        // Reactivar el movimiento de los jugadores (tanques)
+        PlayerController[] tankControllers = FindObjectsOfType<PlayerController>();
+        foreach (var tankController in tankControllers)
+        {
+            if (tankController != null)
+            {
+                tankController.enabled = true; // Reactiva el movimiento del tanque
+            }
+        }
+    }
 }
