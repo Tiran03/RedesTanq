@@ -55,7 +55,7 @@ public class MenuUI : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("GamePlay");
+        PhotonNetwork.LoadLevel("MapSelection");
     }
 
     // Método que se llama cuando no se puede unir a la sala

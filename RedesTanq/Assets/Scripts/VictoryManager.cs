@@ -12,6 +12,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
    
     public PlayerController tank1; // Referencia al primer tanque
     public PlayerController tank2; // Referencia al segundo tanque
+    private Coroutine victoryScreenCoroutine; // Referencia a la corrutina activa
 
 
     private void Awake()
@@ -32,7 +33,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     {
         player1WinsScreen.SetActive(true);
         HandleGameOver();
-        StartCoroutine(VictoryScreenTimer());
+        victoryScreenCoroutine = StartCoroutine(VictoryScreenTimer()); // Guardar referencia a la corrutina
     }
 
     [PunRPC]
@@ -40,7 +41,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     {
         player2WinsScreen.SetActive(true);
         HandleGameOver();
-        StartCoroutine(VictoryScreenTimer());
+        victoryScreenCoroutine = StartCoroutine(VictoryScreenTimer()); // Guardar referencia a la corrutina
     }
 
     private void HandleGameOver()
@@ -79,6 +80,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 
     private void ReturnToMainMenu()
     {
+        StopVictoryScreenCoroutine(); // Detener la corrutina de la pantalla de victoria
         PhotonNetwork.LeaveRoom(); // Salir de la sala antes de cargar el menú principal
         SceneManager.LoadScene("MenuScene");
     }
@@ -107,6 +109,9 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 
     public void ResetGameForRematch()
     {
+        // Detener la corrutina de la pantalla de victoria
+        StopVictoryScreenCoroutine();
+
         // Reactivar el GameTimer
         if (gameTimer != null)
         {
@@ -121,6 +126,15 @@ public class VictoryManager : MonoBehaviourPunCallbacks
         if (tank2 != null)
         {
             tank2.enabled = true; // Permitir el movimiento del tanque 2
+        }
+    }
+
+    private void StopVictoryScreenCoroutine()
+    {
+        if (victoryScreenCoroutine != null)
+        {
+            StopCoroutine(victoryScreenCoroutine); // Detener la corrutina si está activa
+            victoryScreenCoroutine = null; // Limpiar la referencia
         }
     }
 }

@@ -5,6 +5,7 @@ using Photon.Pun;
 public class PlayerController : MonoBehaviour
 {
     private PhotonView pv;
+    public Animator animator;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 200f;
     [SerializeField] private GameObject bulletPrefab;
@@ -25,12 +26,24 @@ public class PlayerController : MonoBehaviour
     public enum TankType { Tank1, Tank2 }
     private TankType currentTankType;
 
+    [SerializeField] private AudioClip shootSound; // Clip de sonido de disparo
+    private AudioSource audioSource; // Componente AudioSource
+
+    public static PlayerController localPlayer; // Referencia al jugador local
+    public bool HasBouncePowerUp { get; private set; } // Propiedad para saber si el jugador tiene el poder de rebote activo
+
+
     private void Awake()
     {
         pv = GetComponent<PhotonView>();
         originalMoveSpeed = moveSpeed;
         originalRotationSpeed = rotationSpeed;
         originalFireRate = fireRate;
+        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        if (pv.IsMine)
+        {
+            localPlayer = this;
+        }
     }
 
     private void Update()
@@ -72,6 +85,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && Time.time >= nextFireTime)
         {
             nextFireTime = Time.time + fireRate;
+            animator.SetTrigger("Shooting");
+            pv.RPC("RPC_PlayShootSound", RpcTarget.All);
             FireBullet();
         }
     }
@@ -79,7 +94,7 @@ public class PlayerController : MonoBehaviour
     private void FireBullet()
     {
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
-
+        animator.SetTrigger("Shooting");
         // Si el poder de bala perforante está activo, aplicarlo a la bala
         if (isPiercingBulletActive)
         {
@@ -173,5 +188,24 @@ public class PlayerController : MonoBehaviour
         currentTankType = tankType;
         // Aquí puedes agregar la lógica para actualizar el modelo del tanque, si es necesario
         Debug.Log($"Tank type set to: {currentTankType}");
+    }
+    public void ActivateBouncePowerUp(float duration)
+    {
+        StartCoroutine(BouncePowerUpCoroutine(duration));
+    }
+
+    private IEnumerator BouncePowerUpCoroutine(float duration)
+    {
+        HasBouncePowerUp = true; // Activa el poder de rebote
+        yield return new WaitForSeconds(duration);
+        HasBouncePowerUp = false; // Desactiva el poder de rebote después de la duración
+    }
+
+    // Método RPC para reproducir el sonido de disparo
+    [PunRPC]
+    private void RPC_PlayShootSound()
+    {
+        // Reproduce el sonido de disparo
+        audioSource.PlayOneShot(shootSound);
     }
 }

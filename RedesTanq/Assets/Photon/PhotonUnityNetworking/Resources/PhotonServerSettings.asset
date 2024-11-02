@@ -63,6 +63,11 @@ MonoBehaviour:
   - RPC_SetPlayer2Ready
   - RPC_StartRematch
   - RPC_RestoreHealth2
+  - ActivateBouncingEffect
+  - RPC_SetBouncingEffect
+  - ActivateBouncing
+  - RPC_ActivateBouncingBullets
+  - RPC_PlayShootSound
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

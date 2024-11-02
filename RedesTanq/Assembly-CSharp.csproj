@@ -77,13 +77,16 @@
     <Compile Include="Assets\Scripts\SpeedBoostPowerUp.cs" />
     <Compile Include="Assets\Scripts\RapidFirePowerUp.cs" />
     <Compile Include="Assets\Scripts\MenuUI.cs" />
+    <Compile Include="Assets\Scripts\BouncingBulletPowerUp.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
     <Compile Include="Assets\Scripts\SurrenderButton.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
+    <Compile Include="Assets\Scripts\GameStarManager.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
     <Compile Include="Assets\Scripts\HealthPowerUp.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\MapSelection.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PowerSpawner.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />

@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Red.unity
     guid: 8eacf21dc01ca9c4ebc1d1714ab57fac
   - enabled: 1
+    path: Assets/Scenes/MapSelection.unity
+    guid: 3a890b654533a9f44ab195f230976661
+  - enabled: 1
     path: Assets/Scenes/GamePlay.unity
     guid: 2ade05fd40ecc9d40921476ee4e83757
+  - enabled: 1
+    path: Assets/Scenes/GamePlay2.unity
+    guid: 71d9ace8403a439488cc690df1bcf04f
   m_configObjects: {}
