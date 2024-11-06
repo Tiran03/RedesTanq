@@ -10,10 +10,12 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
 
     public TextMeshProUGUI timerText; // Referencia al TextMeshPro para mostrar el temporizador
     private bool isGameOver = false;
+    private VictoryManager victoryManager; // Referencia al VictoryManager
 
     private void Start()
     {
         SetupTimer();
+        victoryManager = FindObjectOfType<VictoryManager>();
     }
 
     private void SetupTimer()
@@ -90,6 +92,12 @@ public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
             timerText.text = "Game Over!";
         }
         Debug.Log("The game has ended!");
+
+        // Llamar a DetermineWinner() al final del juego
+        if (victoryManager != null)
+        {
+            victoryManager.DetermineWinner();
+        }
     }
 
     [PunRPC]

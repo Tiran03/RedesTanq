@@ -6,7 +6,7 @@ using System.Collections;
 public class PlayerHealth : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
     private bool isInvulnerable = false;
     [SerializeField] private float invulnerabilityDuration = 1f;
     public bool IsDeath = false;

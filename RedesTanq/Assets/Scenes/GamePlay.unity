@@ -1829,8 +1829,6 @@ MonoBehaviour:
   player1WinsScreen: {fileID: 1193059315}
   player2WinsScreen: {fileID: 1783486334}
   victoryScreenDuration: 40
-  tank1: {fileID: 4729867020200613259, guid: a236adb909c6f6349a2eca71af7a1e50, type: 3}
-  tank2: {fileID: 4729867020200613259, guid: a236adb909c6f6349a2eca71af7a1e50, type: 3}
 --- !u!4 &652505795
 Transform:
   m_ObjectHideFlags: 0
