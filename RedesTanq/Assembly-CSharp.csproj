@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
     <Compile Include="Assets\Scripts\HealthPowerUp.cs" />
+    <Compile Include="Assets\Scripts\RoomTimer.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
     <Compile Include="Assets\Scripts\MapSelection.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />

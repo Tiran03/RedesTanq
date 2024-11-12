@@ -13,6 +13,8 @@ public class Bullet : MonoBehaviourPun
 
 
     private static bool globalBounceEnabled = false; // Propiedad estática para habilitar rebote globalmente
+    public float lifeTime = 3f;
+
 
     private void Start()
     {
@@ -26,6 +28,15 @@ public class Bullet : MonoBehaviourPun
     private void Update()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
+
+        
+        lifeTime -= Time.deltaTime;
+
+       
+        if (lifeTime <= 0f && photonView.IsMine)
+        {
+            PhotonNetwork.Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

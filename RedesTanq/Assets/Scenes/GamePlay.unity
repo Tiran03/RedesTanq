@@ -823,7 +823,7 @@ MonoBehaviour:
   - {fileID: 6859685007415265300, guid: e06a206c13cd2fe4a981ecc2c3d1d96e, type: 3}
   - {fileID: 6859685007415265300, guid: 3ff4fc506fb97fd4c8685c7152b3bea4, type: 3}
   timeToStartSpawning: 10
-  timeBetweenSpawn: 30
+  timeBetweenSpawn: 15
 --- !u!114 &221045471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1829,6 +1829,8 @@ MonoBehaviour:
   player1WinsScreen: {fileID: 1193059315}
   player2WinsScreen: {fileID: 1783486334}
   victoryScreenDuration: 40
+  tank1: {fileID: 0}
+  tank2: {fileID: 0}
 --- !u!4 &652505795
 Transform:
   m_ObjectHideFlags: 0
@@ -3330,7 +3332,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.9622642, g: 0.7444344, b: 0.441189, a: 1}
   m_FlipX: 0
@@ -4055,6 +4057,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705827777}
   m_CullTransparentMesh: 1
+--- !u!1 &1773075688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1773075690}
+  - component: {fileID: 1773075689}
+  m_Layer: 0
+  m_Name: RoomTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1773075689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773075688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468e63a125330a045b37511b6016221c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1773075690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773075688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4859949, y: -1.3760718, z: -0.017616525}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1783486334
 GameObject:
   m_ObjectHideFlags: 0
@@ -5552,3 +5598,4 @@ SceneRoots:
   - {fileID: 221045472}
   - {fileID: 1786965722}
   - {fileID: 771353095}
+  - {fileID: 1773075690}
