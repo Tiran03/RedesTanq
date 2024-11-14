@@ -8,6 +8,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject waitingForOpponentText;
     [SerializeField] private GameObject player1VictoryScreen;
     [SerializeField] private GameObject player2VictoryScreen;
+    [SerializeField] private GameObject DrawScreen;
 
     private bool playerWantsRematch = false;
     private int playersReadyForRematch = 0;
@@ -54,6 +55,11 @@ public class RematchButton : MonoBehaviourPunCallbacks
         if (player2VictoryScreen != null)
         {
             player2VictoryScreen.SetActive(false);
+        }
+        
+        if (DrawScreen != null)
+        {
+            DrawScreen.SetActive(false);
         }
 
         playerWantsRematch = false;

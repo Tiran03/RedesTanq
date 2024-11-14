@@ -61,7 +61,7 @@ public class PlayerSpawn : MonoBehaviour
 
         if (targetPhotonView != null)
         {
-            targetPhotonView.gameObject.GetComponent<SpriteRenderer>().color = (playerIndex == 1) ? Color.cyan : Color.yellow;
+            targetPhotonView.gameObject.GetComponent<SpriteRenderer>().color = (playerIndex == 1) ? Color.cyan : Color.magenta;
         }
     }
 

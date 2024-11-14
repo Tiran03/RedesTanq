@@ -68,6 +68,7 @@ MonoBehaviour:
   - ActivateBouncing
   - RPC_ActivateBouncingBullets
   - RPC_PlayShootSound
+  - ShowDraw
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

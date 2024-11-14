@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 100}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 51
+  controlID: 121
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -341,7 +341,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -6246
+  m_LastSelectedObjectID: 25860
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -491,7 +491,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -499,15 +499,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 75
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: 75
   m_LastProjectPath: C:\Users\santi\OneDrive\Documents\GitHub\RedesTanq\RedesTanq
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 15}
-    m_SelectedIDs: 6c640000
-    m_LastClickedID: 25708
+    m_SelectedIDs: 6a640000
+    m_LastClickedID: 25706
     m_ExpandedIDs: 0000000050640000526400005464000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -563,8 +563,8 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
-    m_ExpandedInstanceIDs: c6230000a6640000
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000a6640000b0640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -678,7 +678,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: dcc8ffffdecfffff26d0ffffecd2ffff0ed3ffff18d3ffff30d3ffff42d3ffff5ad3ffff26dfffffa2e3ffff26e4ffff74e4ffff58e8ffff38ebffff44f2ffff8af2ffff58f5ffff82f5ffff94f5ffffb4f5ffffd0f5fffff0f5ffff54f6ffffa6f9ffff14fbffff
+      m_ExpandedIDs: 629cffffa89cffff769fffffa09fffffb29fffffd29fffffee9fffff0ea0ffff26a4ffff8cc2ffffecc2ffff50c3ffffc0c3ffff24c4ffff74c4ffffc8c4ffff28c7ffff18ceffff5eceffff2cd1ffff56d1ffff68d1ffff88d1ffffa4d1ffffc6d1ffffc4d4ffffbae5ffff06e7fffffaedffff40eeffff0ef1ffff38f1ffff4af1ffff6af1ffff86f1ffffa6f1ffff0cf2ffffaef9ffff14fbfffffc650000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -1071,9 +1071,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -3.9394639, y: 2.0762649, z: 0.11060737}
+    m_Target: {x: -0.62240535, y: 3.3840075, z: -0.044605196}
     speed: 2
-    m_Value: {x: -3.9394639, y: 2.0762649, z: 0.11060737}
+    m_Value: {x: -0.62240535, y: 3.3840075, z: -0.044605196}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1123,9 +1123,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.2943034
+    m_Target: 10.747461
     speed: 2
-    m_Value: 5.2943034
+    m_Value: 10.747461
   m_Ortho:
     m_Target: 1
     speed: 2

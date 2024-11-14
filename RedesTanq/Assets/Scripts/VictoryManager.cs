@@ -7,6 +7,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject player1WinsScreen;
     [SerializeField] private GameObject player2WinsScreen;
+    [SerializeField] private GameObject DrawScreen;
     [SerializeField] private float victoryScreenDuration = 40f; // Duración antes de volver al menú principal
     private GameTimer gameTimer; // Referencia al GameTimer para detenerlo
 
@@ -21,6 +22,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     {
         player1WinsScreen.SetActive(false);
         player2WinsScreen.SetActive(false);
+        DrawScreen.SetActive(false);
 
         // Obtener la referencia al GameTimer
         gameTimer = FindObjectOfType<GameTimer>();
@@ -72,6 +74,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("Empate!");
+            photonView.RPC("ShowDraw", RpcTarget.All);
         }
     }
 
@@ -87,6 +90,14 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     public void ShowPlayer2Wins()
     {
         player2WinsScreen.SetActive(true);
+        HandleGameOver();
+        StartVictoryScreenTimer();
+    }
+    
+    [PunRPC]
+    public void ShowDraw()
+    {
+        DrawScreen.SetActive(true);
         HandleGameOver();
         StartVictoryScreenTimer();
     }
@@ -181,7 +192,15 @@ public class VictoryManager : MonoBehaviourPunCallbacks
         {
             tank2.enabled = true; // Permitir el movimiento del tanque 2
         }
+
+        // Destruir todos los poderes restantes en la escena
+        GameObject[] remainingPowers = GameObject.FindGameObjectsWithTag("PowerUp");
+        foreach (GameObject power in remainingPowers)
+        {
+            PhotonNetwork.Destroy(power);
+        }
     }
+
 
     private void StopVictoryScreenCoroutine()
     {
