@@ -10,6 +10,8 @@ public class PiercingBulletPowerUp : MonoBehaviourPunCallbacks
     {
         if (collision.CompareTag("Player"))
         {
+            photonView.RPC("RPC_PlayPowerSound", RpcTarget.All);
+
             PhotonView playerView = collision.GetComponent<PhotonView>();
 
             if (playerView != null && playerView.IsMine)
@@ -30,5 +32,12 @@ public class PiercingBulletPowerUp : MonoBehaviourPunCallbacks
     private void RPC_DisablePowerUp()
     {
         gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    private void RPC_PlayPowerSound()
+    {
+        // Llama al SoundManager para reproducir el sonido del poder
+        SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

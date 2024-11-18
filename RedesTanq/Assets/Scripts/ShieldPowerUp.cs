@@ -5,15 +5,25 @@ using UnityEngine;
 public class ShieldPowerUp : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float shieldDuration = 5f;
+    private AudioSource audioSource; // Componente AudioSource
+    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+            photonView.RPC("RPC_PlayPowerSound", RpcTarget.All);
             PhotonView playerView = collision.GetComponent<PhotonView>();
 
             if (playerView != null && playerView.IsMine)
             {
+
                 // Aplicar el poder solo al jugador que lo agarró
                 PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
 
@@ -21,7 +31,6 @@ public class ShieldPowerUp : MonoBehaviourPunCallbacks
                 {
                     playerHealth.ApplyShield(shieldDuration);
                 }
-
                 photonView.RPC("RPC_DisablePowerUp", RpcTarget.AllBuffered);
             }
         }
@@ -31,5 +40,13 @@ public class ShieldPowerUp : MonoBehaviourPunCallbacks
     private void RPC_DisablePowerUp()
     {
         gameObject.SetActive(false);
+    }
+
+
+    [PunRPC]
+    private void RPC_PlayPowerSound()
+    {
+        // Llama al SoundManager para reproducir el sonido del poder
+        SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

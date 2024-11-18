@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private TankType currentTankType;
 
     [SerializeField] private AudioClip shootSound; // Clip de sonido de disparo
+    //[SerializeField] private AudioClip PowerSound; // Clip de sonido de power
     private AudioSource audioSource; // Componente AudioSource
 
     public static PlayerController localPlayer; // Referencia al jugador local
@@ -208,4 +209,23 @@ public class PlayerController : MonoBehaviour
         // Reproduce el sonido de disparo
         audioSource.PlayOneShot(shootSound);
     }
+    
+    
+    //[PunRPC]
+    //private void RPC_PlayPowerSound()
+    //{
+    //    // Reproduce el sonido de disparo
+    //    audioSource.PlayOneShot(shootSound);
+    //}
+
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("PowerUp"))
+    //    {
+    //        pv.RPC("RPC_PlayPowerSound", RpcTarget.All);
+    //    }
+
+    //}
+
+    
 }

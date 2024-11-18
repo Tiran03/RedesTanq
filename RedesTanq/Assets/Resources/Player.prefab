@@ -173,6 +173,7 @@ MonoBehaviour:
   firePoint: {fileID: 609142673284988958}
   fireRate: 0.5
   shootSound: {fileID: 8300000, guid: 4b8a460a2fd457b4d9a12c26d7bf2ffc, type: 3}
+  PowerSound: {fileID: 8300000, guid: b46086290b03f774bb835b01837c5dbd, type: 3}
 --- !u!61 &-8208951351694761671
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -315,7 +316,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4b8a460a2fd457b4d9a12c26d7bf2ffc, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.499
   m_Pitch: 1

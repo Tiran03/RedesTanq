@@ -6,15 +6,27 @@ public class BouncingBulletPowerUp : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float bounceDuration = 3f; // Duración del poder de rebote
 
+    private AudioSource audioSource; // Componente AudioSource
+    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
+            photonView.RPC("RPC_PlayPowerSound", RpcTarget.All);
+
             PhotonView playerView = other.GetComponent<PhotonView>();
 
             // Asegúrate de que el poder solo afecta al jugador que lo recogió
             if (playerView != null && playerView.IsMine)
             {
+
                 // Activa el efecto de rebote en el jugador que recogió el power-up
                 PlayerController playerController = other.GetComponent<PlayerController>();
                 if (playerController != null)
@@ -22,7 +34,7 @@ public class BouncingBulletPowerUp : MonoBehaviourPunCallbacks
                     playerController.ActivateBouncePowerUp(bounceDuration);
                 }
 
-                photonView.RPC("RPC_DisablePowerUp", RpcTarget.AllBuffered); // Destruye el power-up en la escena
+                photonView.RPC("RPC_DisablePowerUp", RpcTarget.AllBuffered);
             }
         }
     }
@@ -31,5 +43,12 @@ public class BouncingBulletPowerUp : MonoBehaviourPunCallbacks
     private void RPC_DisablePowerUp()
     {
         gameObject.SetActive(false);
+    }
+
+    [PunRPC]
+    private void RPC_PlayPowerSound()
+    {
+        // Llama al SoundManager para reproducir el sonido del poder
+        SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }
