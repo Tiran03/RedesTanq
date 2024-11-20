@@ -11,10 +11,8 @@ public class Bullet : MonoBehaviourPun
     private float bulletSpeedMultiplier = 1f;
     private bool isBouncing = false;
 
-
     private static bool globalBounceEnabled = false; // Propiedad estática para habilitar rebote globalmente
     public float lifeTime = 3f;
-
 
     private void Start()
     {
@@ -29,10 +27,8 @@ public class Bullet : MonoBehaviourPun
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
 
-        
         lifeTime -= Time.deltaTime;
 
-       
         if (lifeTime <= 0f && photonView.IsMine)
         {
             PhotonNetwork.Destroy(gameObject);
@@ -46,7 +42,12 @@ public class Bullet : MonoBehaviourPun
         // Verificar si el rebote global está activado y que estamos chocando con una pared
         if (isBouncing && other.CompareTag("Wall"))
         {
-            BounceOffWall(other); // Realiza el rebote en la pared
+            Vector2 normal = (transform.position - (Vector3)other.ClosestPoint(transform.position)).normalized;
+            Vector2 currentDirection = transform.up;
+            Vector2 reflectedDirection = Vector2.Reflect(currentDirection, normal);
+
+            // Sincronizar el rebote con todos los jugadores
+            photonView.RPC("BounceOffWallRPC", RpcTarget.All, reflectedDirection);
             return;
         }
 
@@ -77,11 +78,10 @@ public class Bullet : MonoBehaviourPun
         }
     }
 
-    private void BounceOffWall(Collider2D wall)
+    [PunRPC]
+    private void BounceOffWallRPC(Vector2 reflectedDirection)
     {
-        Vector2 normal = (transform.position - (Vector3)wall.ClosestPoint(transform.position)).normalized;
-        Vector2 currentDirection = transform.up;
-        Vector2 reflectedDirection = Vector2.Reflect(currentDirection, normal);
+        // Actualiza la dirección de la bala tras el rebote
         transform.up = reflectedDirection;
     }
 

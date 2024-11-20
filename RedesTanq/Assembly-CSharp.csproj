@@ -64,8 +64,8 @@
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
     <Compile Include="Assets\Scripts\Power\BouncingBulletPowerUp.cs" />
     <Compile Include="Assets\Scripts\Manager\GameStarManager.cs" />
-    <Compile Include="Assets\Scripts\Power\PiercingBulletPowerUp.cs" />
     <Compile Include="Assets\Scripts\Red\RematchButton.cs" />
+    <Compile Include="Assets\Scripts\Power\PiercingBulletPowerUp.cs" />
     <Compile Include="Assets\Scripts\Power\HealthPowerUp.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
     <Compile Include="Assets\Scripts\Manager\VictoryManager.cs" />
