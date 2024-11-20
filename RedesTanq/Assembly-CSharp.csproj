@@ -55,49 +55,49 @@
     <UnityVersion>2022.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.16f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\UI\GameTimer.cs" />
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
-    <Compile Include="Assets\Scripts\PiercingBulletPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Power\BouncingBulletPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Manager\GameStarManager.cs" />
+    <Compile Include="Assets\Scripts\Power\PiercingBulletPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Red\RematchButton.cs" />
+    <Compile Include="Assets\Scripts\Power\HealthPowerUp.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
-    <Compile Include="Assets\Scripts\VictoryManager.cs" />
-    <Compile Include="Assets\Scripts\ShieldPowerUp.cs" />
-    <Compile Include="Assets\Scripts\ConnectToServer.cs" />
-    <Compile Include="Assets\Scripts\MenuPausa.cs" />
+    <Compile Include="Assets\Scripts\Manager\VictoryManager.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\Power\PowerSpawner.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuUI.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\OnStartDelete.cs" />
+    <Compile Include="Assets\Scripts\Bullet\Bullet.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatGui.cs" />
-    <Compile Include="Assets\Scripts\RematchButton.cs" />
-    <Compile Include="Assets\Scripts\Bullet.cs" />
-    <Compile Include="Assets\Scripts\SlowZone.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChannelSelector.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
-    <Compile Include="Assets\Scripts\SpeedBoostPowerUp.cs" />
-    <Compile Include="Assets\Scripts\RapidFirePowerUp.cs" />
-    <Compile Include="Assets\Scripts\MenuUI.cs" />
-    <Compile Include="Assets\Scripts\BouncingBulletPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Manager\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\Red\RoomTimer.cs" />
+    <Compile Include="Assets\Scripts\Player\PlayerSpawn.cs" />
+    <Compile Include="Assets\Scripts\Power\SpeedBoostPowerUp.cs" />
+    <Compile Include="Assets\Scripts\Power\RapidFirePowerUp.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextToggleIsOnTransition.cs" />
-    <Compile Include="Assets\Scripts\SurrenderButton.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
-    <Compile Include="Assets\Scripts\GameStarManager.cs" />
-    <Compile Include="Assets\Scripts\Menu.cs" />
-    <Compile Include="Assets\Scripts\PlayerSpawn.cs" />
-    <Compile Include="Assets\Scripts\HealthPowerUp.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
-    <Compile Include="Assets\Scripts\RoomTimer.cs" />
-    <Compile Include="Assets\Scripts\PlayerHealth.cs" />
-    <Compile Include="Assets\Scripts\Sound.cs" />
-    <Compile Include="Assets\Scripts\MapSelection.cs" />
-    <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\PowerSpawner.cs" />
+    <Compile Include="Assets\Scripts\Power\ShieldPowerUp.cs" />
+    <Compile Include="Assets\Scripts\UI\MapSelection.cs" />
+    <Compile Include="Assets\Scripts\Red\ConnectToServer.cs" />
+    <Compile Include="Assets\Scripts\UI\SlowZone.cs" />
+    <Compile Include="Assets\Scripts\Manager\LoadingManager.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\EventSystemSpawner.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
-    <Compile Include="Assets\Scripts\LoadingManager.cs" />
+    <Compile Include="Assets\Scripts\Red\SurrenderButton.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\Common\TextButtonTransition.cs" />
-    <Compile Include="Assets\Scripts\GameTimer.cs" />
+    <Compile Include="Assets\Scripts\Manager\Sound.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuPausa.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

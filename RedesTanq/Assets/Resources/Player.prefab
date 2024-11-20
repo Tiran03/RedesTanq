@@ -173,7 +173,6 @@ MonoBehaviour:
   firePoint: {fileID: 609142673284988958}
   fireRate: 0.5
   shootSound: {fileID: 8300000, guid: 4b8a460a2fd457b4d9a12c26d7bf2ffc, type: 3}
-  PowerSound: {fileID: 8300000, guid: b46086290b03f774bb835b01837c5dbd, type: 3}
 --- !u!61 &-8208951351694761671
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -260,7 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   currentHealth: 0
-  invulnerabilityDuration: 1.5
+  invulnerabilityDuration: 0.6
   IsDeath: 0
   healthText: {fileID: 0}
   isTank1: 0
