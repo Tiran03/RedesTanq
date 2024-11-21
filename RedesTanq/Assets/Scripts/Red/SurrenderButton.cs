@@ -13,10 +13,10 @@ public class SurrenderButton : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_ReturnToMenu()
     {
-        // Desconectar de la sala actual
+        
         PhotonNetwork.LeaveRoom();
 
-        // Cargar la escena del menú principal
+        
         SceneManager.LoadScene("MenuScene");
     }
 

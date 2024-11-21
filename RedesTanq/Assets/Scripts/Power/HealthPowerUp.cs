@@ -4,13 +4,13 @@ using UnityEngine;
 public class HealthPowerUp : MonoBehaviourPunCallbacks
 {
     [SerializeField] private int healthToRestore = 1;
-    private AudioSource audioSource; // Componente AudioSource
-    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+    private AudioSource audioSource; 
+    [SerializeField] private AudioClip PowerSound; 
 
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,7 +46,7 @@ public class HealthPowerUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_PlayPowerSound()
     {
-        // Llama al SoundManager para reproducir el sonido del poder
+       
         SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

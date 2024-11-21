@@ -19,7 +19,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
         rematchButton.onClick.AddListener(OnRematchButtonClicked);
         waitingForOpponentText.SetActive(false);
 
-        // Obtener referencia a VictoryManager
+        
         victoryManager = FindObjectOfType<VictoryManager>();
     }
 
@@ -36,7 +36,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
     {
         playersReadyForRematch++;
 
-        // Si ambos jugadores han aceptado la revancha, iniciar nueva partida
+        
         if (playersReadyForRematch >= 2)
         {
             photonView.RPC("RPC_StartRematch", RpcTarget.All);
@@ -46,7 +46,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_StartRematch()
     {
-        // Desactivar pantallas de victoria
+        
         if (player1VictoryScreen != null)
         {
             player1VictoryScreen.SetActive(false);
@@ -67,13 +67,13 @@ public class RematchButton : MonoBehaviourPunCallbacks
         rematchButton.interactable = true;
         waitingForOpponentText.SetActive(false);
 
-        // Llama al método ResetGameForRematch() de VictoryManager
+        
         if (victoryManager != null)
         {
             victoryManager.ResetGameForRematch();
         }
 
-        // Reiniciar vidas de ambos jugadores y restablecer posiciones
+        
         PlayerHealth[] playerHealths = FindObjectsOfType<PlayerHealth>();
         foreach (var playerHealth in playerHealths)
         {
@@ -84,7 +84,7 @@ public class RematchButton : MonoBehaviourPunCallbacks
                 playerHealth.IsDeath = false;
             }
 
-            // Restablecer posición inicial
+            
             if (playerHealth.isTank1)
             {
                 playerHealth.transform.position = new Vector2(-6.322893f, 1.466833f);
@@ -95,14 +95,14 @@ public class RematchButton : MonoBehaviourPunCallbacks
             }
         }
 
-        // Reactivar el temporizador del juego
+        
         GameTimer gameTimer = FindObjectOfType<GameTimer>();
         if (gameTimer != null)
         {
             gameTimer.ResetTimer();
         }
 
-        // Reactivar el movimiento de los tanques
+        
         PlayerController[] tankControllers = FindObjectsOfType<PlayerController>();
         foreach (var tankController in tankControllers)
         {

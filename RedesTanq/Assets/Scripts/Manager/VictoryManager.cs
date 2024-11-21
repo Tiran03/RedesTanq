@@ -8,15 +8,15 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject player1WinsScreen;
     [SerializeField] private GameObject player2WinsScreen;
     [SerializeField] private GameObject DrawScreen;
-    [SerializeField] private float victoryScreenDuration = 40f; // Duración antes de volver al menú principal
-    private GameTimer gameTimer; // Referencia al GameTimer para detenerlo
+    [SerializeField] private float victoryScreenDuration = 40f; 
+    private GameTimer gameTimer; 
 
-    public PlayerController tank1; // Referencia al primer tanque
-    public PlayerController tank2; // Referencia al segundo tanque
-    private PlayerHealth player1Health; // Vida del jugador 1
-    private PlayerHealth player2Health; // Vida del jugador 2
-    private Coroutine victoryScreenCoroutine; // Referencia a la corrutina activa
-    private bool isRematchInProgress = false; // Indicador de revancha en progreso
+    public PlayerController tank1; 
+    public PlayerController tank2; 
+    private PlayerHealth player1Health; 
+    private PlayerHealth player2Health; 
+    private Coroutine victoryScreenCoroutine; 
+    private bool isRematchInProgress = false; 
 
     private void Awake()
     {
@@ -24,13 +24,13 @@ public class VictoryManager : MonoBehaviourPunCallbacks
         player2WinsScreen.SetActive(false);
         DrawScreen.SetActive(false);
 
-        // Obtener la referencia al GameTimer
+        
         gameTimer = FindObjectOfType<GameTimer>();
     }
 
     private void Update()
     {
-        // Comprobar y asignar las referencias de vida de los jugadores cuando estén en la sala
+        
         if (player1Health == null || player2Health == null)
         {
             AssignPlayerHealthComponents();
@@ -54,7 +54,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // Este método será llamado desde el GameTimer cuando llegue a cero
+    // Este método se llama desde el GameTimer cuando llegue a cero
     public void DetermineWinner()
     {
         if (player1Health == null || player2Health == null)
@@ -104,27 +104,27 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 
     private void HandleGameOver()
     {
-        // Detener el GameTimer
+        
         if (gameTimer != null)
         {
             gameTimer.StopTimer();
         }
 
-        // Desactivar el movimiento de los jugadores (tanques)
+       
         PlayerController[] tankControllers = FindObjectsOfType<PlayerController>();
         foreach (var tankController in tankControllers)
         {
             if (tankController != null)
             {
-                tankController.enabled = false; // Desactiva el movimiento del tanque
+                tankController.enabled = false; 
             }
         }
     }
 
     private void StartVictoryScreenTimer()
     {
-        StopVictoryScreenCoroutine(); // Asegura detener cualquier corrutina en progreso antes de iniciar una nueva
-        isRematchInProgress = false;  // Reestablece el indicador de revancha
+        StopVictoryScreenCoroutine(); 
+        isRematchInProgress = false; 
         victoryScreenCoroutine = StartCoroutine(VictoryScreenTimer());
     }
 
@@ -146,7 +146,7 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 
     private void ReturnToMainMenu()
     {
-        PhotonNetwork.LeaveRoom(); // Salir de la sala antes de cargar el menú principal
+        PhotonNetwork.LeaveRoom(); 
         SceneManager.LoadScene("MenuScene");
     }
 
@@ -169,31 +169,31 @@ public class VictoryManager : MonoBehaviourPunCallbacks
 
     public void ResetGameForRematch()
     {
-        isRematchInProgress = true; // Activar la bandera de revancha
+        isRematchInProgress = true; 
 
         StopVictoryScreenCoroutine();
 
-        // Ocultar las pantallas de victoria
+        
         player1WinsScreen.SetActive(false);
         player2WinsScreen.SetActive(false);
 
-        // Reactivar el GameTimer
+       
         if (gameTimer != null)
         {
-            gameTimer.ResetTimer(); // Reiniciar el temporizador del juego
+            gameTimer.ResetTimer();
         }
 
         // Reactivar la lógica de movimiento de los tanques
         if (tank1 != null)
         {
-            tank1.enabled = true; // Permitir el movimiento del tanque 1
+            tank1.enabled = true; 
         }
         if (tank2 != null)
         {
-            tank2.enabled = true; // Permitir el movimiento del tanque 2
+            tank2.enabled = true;
         }
 
-        // Destruir todos los poderes restantes en la escena
+        // Destruir todos los poderes que hayan quedado en la escena
         GameObject[] remainingPowers = GameObject.FindGameObjectsWithTag("PowerUp");
         foreach (GameObject power in remainingPowers)
         {
@@ -206,8 +206,8 @@ public class VictoryManager : MonoBehaviourPunCallbacks
     {
         if (victoryScreenCoroutine != null)
         {
-            StopCoroutine(victoryScreenCoroutine); // Detener la corrutina si está activa
-            victoryScreenCoroutine = null; // Limpiar la referencia
+            StopCoroutine(victoryScreenCoroutine);
+            victoryScreenCoroutine = null; 
         }
     }
 }

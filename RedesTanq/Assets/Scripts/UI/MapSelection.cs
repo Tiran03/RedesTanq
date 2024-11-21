@@ -10,7 +10,7 @@ public class MapSelection : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        PhotonNetwork.AutomaticallySyncScene = true; // Asegura que todos los jugadores estén en la misma escena
+        PhotonNetwork.AutomaticallySyncScene = true; 
 
         if (PhotonNetwork.IsMasterClient)
         {

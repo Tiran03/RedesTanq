@@ -6,13 +6,13 @@ public class RapidFirePowerUp : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float boostDuration = 6f;
     [SerializeField] private float fireRateMultiplier = 2f;
-    private AudioSource audioSource; // Componente AudioSource
-    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+    private AudioSource audioSource; 
+    [SerializeField] private AudioClip PowerSound; 
 
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,7 +49,7 @@ public class RapidFirePowerUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_PlayPowerSound()
     {
-        // Llama al SoundManager para reproducir el sonido del poder
+        
         SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlowZone : MonoBehaviour
 {
-    [SerializeField] private float slowDownFactor = 0.5f; // Factor de ralentización (0.5 reduce la velocidad a la mitad)
+    [SerializeField] private float slowDownFactor = 0.5f; 
 
     private void OnTriggerEnter2D(Collider2D other)
     {

@@ -7,13 +7,13 @@ public class SpeedBoostPowerUp : MonoBehaviourPunCallbacks
     [SerializeField] private float boostDuration = 6f; 
     [SerializeField] private float speedMultiplier = 1.5f; 
     [SerializeField] private float rotationMultiplier = 1.5f;
-    private AudioSource audioSource; // Componente AudioSource
-    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+    private AudioSource audioSource; 
+    [SerializeField] private AudioClip PowerSound; 
 
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        audioSource = GetComponent<AudioSource>(); 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,7 +26,7 @@ public class SpeedBoostPowerUp : MonoBehaviourPunCallbacks
 
             if (playerView != null && playerView.IsMine)
             {
-                // Aplicar el poder solo al jugador que lo agarró
+                
                 PlayerController playerController = collision.GetComponent<PlayerController>();
 
                 if (playerController != null)
@@ -50,7 +50,7 @@ public class SpeedBoostPowerUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_PlayPowerSound()
     {
-        // Llama al SoundManager para reproducir el sonido del poder
+        
         SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

@@ -37,7 +37,7 @@ public class PiercingBulletPowerUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_PlayPowerSound()
     {
-        // Llama al SoundManager para reproducir el sonido del poder
+        
         SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

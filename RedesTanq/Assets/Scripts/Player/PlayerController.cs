@@ -26,12 +26,12 @@ public class PlayerController : MonoBehaviour
     public enum TankType { Tank1, Tank2 }
     private TankType currentTankType;
 
-    [SerializeField] private AudioClip shootSound; // Clip de sonido de disparo
+    [SerializeField] private AudioClip shootSound; 
     //[SerializeField] private AudioClip PowerSound; // Clip de sonido de power
-    private AudioSource audioSource; // Componente AudioSource
+    private AudioSource audioSource;
 
-    public static PlayerController localPlayer; // Referencia al jugador local
-    public bool HasBouncePowerUp { get; private set; } // Propiedad para saber si el jugador tiene el poder de rebote activo
+    public static PlayerController localPlayer;
+    public bool HasBouncePowerUp { get; private set; } 
 
 
     private void Awake()
@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         originalMoveSpeed = moveSpeed;
         originalRotationSpeed = rotationSpeed;
         originalFireRate = fireRate;
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        audioSource = GetComponent<AudioSource>(); 
         if (pv.IsMine)
         {
             localPlayer = this;
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Rotación del tanque con las teclas A y D
+        
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime);
         }
 
-        // Movimiento del tanque hacia adelante y atrás con las teclas W y S
+        
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.up * moveSpeed * Time.deltaTime;
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
         animator.SetTrigger("Shooting");
-        // Si el poder de bala perforante está activo, aplicarlo a la bala
+        
         if (isPiercingBulletActive)
         {
             Bullet bulletScript = bullet.GetComponent<Bullet>();
@@ -122,10 +122,10 @@ public class PlayerController : MonoBehaviour
         moveSpeed *= speedMultiplier;
         rotationSpeed *= rotationMultiplier;
 
-        // Esperar la duración del boost
+       
         yield return new WaitForSeconds(boostDuration);
 
-        // Restaurar las velocidades originales
+        
         moveSpeed = originalMoveSpeed;
         rotationSpeed = originalRotationSpeed;
     }
@@ -159,13 +159,13 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator RapidFireCoroutine(float fireRateMultiplier, float boostDuration)
     {
-        // Aumentar la tasa de disparo (disminuye el tiempo entre disparos)
+        
         fireRate /= fireRateMultiplier;
 
-        // Esperar la duración del boost
+        
         yield return new WaitForSeconds(boostDuration);
 
-        // Restaurar la tasa de disparo original
+        
         fireRate = originalFireRate;
     }
 
@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
     public void SetTankType(TankType tankType)
     {
         currentTankType = tankType;
-        // Aquí puedes agregar la lógica para actualizar el modelo del tanque, si es necesario
+        
         Debug.Log($"Tank type set to: {currentTankType}");
     }
     public void ActivateBouncePowerUp(float duration)
@@ -197,16 +197,16 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator BouncePowerUpCoroutine(float duration)
     {
-        HasBouncePowerUp = true; // Activa el poder de rebote
+        HasBouncePowerUp = true; 
         yield return new WaitForSeconds(duration);
-        HasBouncePowerUp = false; // Desactiva el poder de rebote después de la duración
+        HasBouncePowerUp = false; 
     }
 
     // Método RPC para reproducir el sonido de disparo
     [PunRPC]
     private void RPC_PlayShootSound()
     {
-        // Reproduce el sonido de disparo
+       
         audioSource.PlayOneShot(shootSound);
     }
     

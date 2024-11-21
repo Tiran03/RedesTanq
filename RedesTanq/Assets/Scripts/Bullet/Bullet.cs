@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviourPun
     private float bulletSpeedMultiplier = 1f;
     private bool isBouncing = false;
 
-    private static bool globalBounceEnabled = false; // Propiedad estática para habilitar rebote globalmente
+    private static bool globalBounceEnabled = false;
     public float lifeTime = 3f;
 
     private void Start()
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviourPun
             Vector2 currentDirection = transform.up;
             Vector2 reflectedDirection = Vector2.Reflect(currentDirection, normal);
 
-            // Sincronizar el rebote con todos los jugadores
+            
             photonView.RPC("BounceOffWallRPC", RpcTarget.All, reflectedDirection);
             return;
         }
@@ -81,11 +81,11 @@ public class Bullet : MonoBehaviourPun
     [PunRPC]
     private void BounceOffWallRPC(Vector2 reflectedDirection)
     {
-        // Actualiza la dirección de la bala tras el rebote
+        
         transform.up = reflectedDirection;
     }
 
-    // Método para activar o desactivar el rebote globalmente
+    
     public static void SetGlobalBounce(bool enabled)
     {
         globalBounceEnabled = enabled;

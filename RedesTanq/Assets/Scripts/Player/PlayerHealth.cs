@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
     private void Awake()
     {
         currentHealth = maxHealth;
-        victoryManager = FindObjectOfType<VictoryManager>(); // Encontrar el VictoryManager en la escena
+        victoryManager = FindObjectOfType<VictoryManager>(); 
     }
 
     private void Update()
@@ -27,7 +27,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         UpdateHealthUI();
     }
 
-    // Función que sincroniza el daño para todos los jugadores
+    
     public void TakeDamage(int damage)
     {
         photonView.RPC("RPC_TakeDamage", RpcTarget.AllBuffered, damage);
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         if (!isInvulnerable)
         {
             currentHealth -= damage;
-            StartCoroutine(InvulnerabilityCoroutine()); // Iniciar invulnerabilidad
+            StartCoroutine(InvulnerabilityCoroutine()); 
             if (currentHealth <= 0)
             {
                 IsDeath = true;
@@ -56,7 +56,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         }
     }
 
-    // Invulnerabilidad tras recibir daño
+    
     private IEnumerator InvulnerabilityCoroutine()
     {
         isInvulnerable = true;
@@ -64,7 +64,7 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
         isInvulnerable = false;
     }
 
-    // Función que sincroniza la muerte
+    
     private void Die()
     {
         if (IsDeath)

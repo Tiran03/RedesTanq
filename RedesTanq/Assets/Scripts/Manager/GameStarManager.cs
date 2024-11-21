@@ -18,13 +18,13 @@ public class GameStartManager : MonoBehaviourPunCallbacks
 
     private IEnumerator CheckPlayersReady()
     {
-        // Espera hasta que ambos jugadores estén en la sala
+        
         yield return new WaitUntil(() => PhotonNetwork.CurrentRoom.PlayerCount >= 2);
 
-        bothPlayersReady = true; // Marca ambos jugadores como listos
+        bothPlayersReady = true; 
         yield return new WaitForSeconds(startDelay); // Espera los 3 segundos
 
-        TogglePlayerMovement(true); // Permite el movimiento después de la espera
+        TogglePlayerMovement(true); // Permite el movimiento después de esperar
     }
 
     private void TogglePlayerMovement(bool canMove)

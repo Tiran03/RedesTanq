@@ -5,13 +5,13 @@ using UnityEngine;
 public class ShieldPowerUp : MonoBehaviourPunCallbacks
 {
     [SerializeField] private float shieldDuration = 5f;
-    private AudioSource audioSource; // Componente AudioSource
-    [SerializeField] private AudioClip PowerSound; // Clip de sonido de disparo
+    private AudioSource audioSource; 
+    [SerializeField] private AudioClip PowerSound;
 
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>(); // Obtener el AudioSource
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,7 +24,7 @@ public class ShieldPowerUp : MonoBehaviourPunCallbacks
             if (playerView != null && playerView.IsMine)
             {
 
-                // Aplicar el poder solo al jugador que lo agarró
+                
                 PlayerHealth playerHealth = collision.GetComponent<PlayerHealth>();
 
                 if (playerHealth != null)
@@ -46,7 +46,7 @@ public class ShieldPowerUp : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_PlayPowerSound()
     {
-        // Llama al SoundManager para reproducir el sonido del poder
+        
         SoundManager.Instance.PlaySound("PiercingPowerSound");
     }
 }

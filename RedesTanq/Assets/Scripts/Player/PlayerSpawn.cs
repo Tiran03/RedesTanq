@@ -74,7 +74,7 @@ public class PlayerSpawn : MonoBehaviour
         {
             PlayerHealth playerHealth = targetPhotonView.GetComponent<PlayerHealth>();
 
-            // Asignar el TextMeshProUGUI basado en el índice del jugador
+            
             if (playerIndex == 1)
             {
                 playerHealth.healthText = tank1HealthText;

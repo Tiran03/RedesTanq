@@ -4,13 +4,13 @@ using TMPro;
 
 public class GameTimer : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField] private float maxTime = 120f; // Tiempo máximo en segundos
+    [SerializeField] private float maxTime = 120f; 
     private float currentTime;
     private bool isTimerStarted = false;
 
-    public TextMeshProUGUI timerText; // Referencia al TextMeshPro para mostrar el temporizador
+    public TextMeshProUGUI timerText; 
     private bool isGameOver = false;
-    private VictoryManager victoryManager; // Referencia al VictoryManager
+    private VictoryManager victoryManager; 
 
     private void Start()
     {

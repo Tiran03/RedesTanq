@@ -10,14 +10,14 @@ public class MenuUI : MonoBehaviourPunCallbacks
     [SerializeField] private Button joinButton;
     [SerializeField] private TMPro.TMP_InputField createInput;
     [SerializeField] private TMPro.TMP_InputField joinInput;
-    [SerializeField] private GameObject errorMessage; // Referencia al mensaje de "Error"
+    [SerializeField] private GameObject errorMessage; 
 
     private void Awake()
     {
         createButton.onClick.AddListener(CreateRoom);
         joinButton.onClick.AddListener(JoinRoom);
 
-        // Asegúrate de que el mensaje de error esté desactivado al inicio
+        
         errorMessage.SetActive(false);
     }
 
@@ -29,11 +29,11 @@ public class MenuUI : MonoBehaviourPunCallbacks
 
     private void CreateRoom()
     {
-        // Verificar si el campo de input está vacío
+       
         if (string.IsNullOrEmpty(createInput.text))
         {
             ShowErrorMessage("Debe proporcionar un nombre para crear la sala");
-            return; // No continuar si no hay nombre
+            return; 
         }
 
         RoomOptions roomConfiguration = new RoomOptions();
@@ -43,11 +43,11 @@ public class MenuUI : MonoBehaviourPunCallbacks
 
     private void JoinRoom()
     {
-        // Verificar si el campo de input está vacío
+        
         if (string.IsNullOrEmpty(joinInput.text))
         {
             ShowErrorMessage("Debe proporcionar un nombre para unirse a la sala");
-            return; // No continuar si no hay nombre
+            return; 
         }
 
         PhotonNetwork.JoinRoom(joinInput.text);
@@ -58,7 +58,7 @@ public class MenuUI : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("MapSelection");
     }
 
-    // Método que se llama cuando no se puede unir a la sala
+    
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         if (message.Contains("full"))
@@ -76,19 +76,19 @@ public class MenuUI : MonoBehaviourPunCallbacks
     {
         if (errorMessage != null)
         {
-            // Mostrar el mensaje de error
+            
             errorMessage.SetActive(true);
-            // Cambiar el texto del mensaje de error
+            
             errorMessage.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = errorText;
-            // Iniciar corrutina para ocultar el mensaje después de 4 segundos
+            
             StartCoroutine(HideErrorMessageAfterDelay(4f));
         }
     }
 
-    // Corrutina para ocultar el mensaje después de un retraso
+    
     private IEnumerator HideErrorMessageAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        errorMessage.SetActive(false); // Ocultar el mensaje
+        errorMessage.SetActive(false);
     }
 }
